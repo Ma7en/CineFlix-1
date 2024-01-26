@@ -5,12 +5,14 @@ import "./styles/style.scss";
 import App from "./App";
 // import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+// import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     // <React.StrictMode>
     <BrowserRouter>
         <App />
+        {/* <SpeedInsights url="https://example.com" /> */}
     </BrowserRouter>
     // </BrowserRouter>
 );
