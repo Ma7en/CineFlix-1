@@ -62,7 +62,7 @@ const Movies = () => {
                 const response = await axios.get(
                     `${apiLink}genre/movie/list?api_key=${apiKey}`
                 );
-                console.log(`gen=>>>`, response);
+                // console.log(`gen=>>>`, response);
                 const data = response.data.genres;
                 setGenres(data);
             } catch (error) {
@@ -118,15 +118,12 @@ const Movies = () => {
                                 onChange={handleGenreChange}
                             >
                                 <option value="all genres">All genres</option>
-                                {genres.map((genre) => (
-                                    <>
-                                        <option
-                                            value={genre.name}
-                                            key={genre.name}
-                                        >
+                                {genres.map((genre, index) => (
+                                    <React.Fragment key={index}>
+                                        <option value={genre.name}>
                                             {genre.name}
                                         </option>
-                                    </>
+                                    </React.Fragment>
                                 ))}
                             </select>
 
@@ -162,49 +159,53 @@ const Movies = () => {
                     </div>
 
                     <div className="movies-grid">
-                        {allMovies.map((movie) => (
-                            <div className="movie-card" key={movie.title}>
-                                <div className="card-head">
-                                    <img
-                                        src={`${imagePath}${movie.poster_path}`}
-                                        alt={movie.title}
-                                        className="card-img"
-                                    />
-                                    <div className="card-overlay">
-                                        <div className="bookmark">
-                                            <ion-icon name="bookmark-outline" />
+                        {allMovies.map((movie, index) => (
+                            <React.Fragment key={index}>
+                                <div className="movie-card">
+                                    <div className="card-head">
+                                        <img
+                                            src={`${imagePath}${movie.poster_path}`}
+                                            alt={movie.title}
+                                            className="card-img"
+                                        />
+                                        <div className="card-overlay">
+                                            <div className="bookmark">
+                                                <ion-icon name="bookmark-outline" />
+                                            </div>
+                                            <div className="rating">
+                                                <ion-icon name="star-outline" />
+                                                <span>
+                                                    {movie.vote_average.toFixed(
+                                                        2
+                                                    )}
+                                                </span>
+                                            </div>
+                                            <div className="play">
+                                                <Link
+                                                    to={`/movieDetails/${movie.id}`}
+                                                >
+                                                    <ion-icon name="play-circle-outline" />
+                                                </Link>
+                                            </div>
                                         </div>
-                                        <div className="rating">
-                                            <ion-icon name="star-outline" />
-                                            <span>
-                                                {movie.vote_average.toFixed(2)}
+                                    </div>
+                                    <div className="card-body">
+                                        <h3 className="card-title">
+                                            {movie.title}
+                                        </h3>
+                                        <div className="card-info">
+                                            <span className="genre">
+                                                {getGenreNames(movie.genre_ids)}
+                                            </span>
+                                            <span className="year">
+                                                {new Date(
+                                                    movie.release_date
+                                                ).getFullYear()}
                                             </span>
                                         </div>
-                                        <div className="play">
-                                            <Link
-                                                to={`/movieDetails/${movie.id}`}
-                                            >
-                                                <ion-icon name="play-circle-outline" />
-                                            </Link>
-                                        </div>
                                     </div>
                                 </div>
-                                <div className="card-body">
-                                    <h3 className="card-title">
-                                        {movie.title}
-                                    </h3>
-                                    <div className="card-info">
-                                        <span className="genre">
-                                            {getGenreNames(movie.genre_ids)}
-                                        </span>
-                                        <span className="year">
-                                            {new Date(
-                                                movie.release_date
-                                            ).getFullYear()}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                            </React.Fragment>
                         ))}
                     </div>
 
