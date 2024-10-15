@@ -29,6 +29,7 @@ const Movies = () => {
                 const response = await axios.get(
                     `${apiLink}movie/popular?api_key=${apiKey}&page=${currentPage}`
                 );
+
                 // قم بتحديث allMovies بناءً على القيم المحددة من الفلاتر
                 const filteredMovies = response.data.results.filter((movie) => {
                     const genreMatch =
